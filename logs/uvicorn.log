@@ -1,0 +1,11 @@
+INFO - 2023-10-10 16:24:29,905 - uvicorn.error - config.__init__() - 339 - Will watch for changes in these directories: ['/home/musa/workstation/own/python_projects/future_pet'] 
+INFO - 2023-10-10 16:24:29,908 - uvicorn.error - config.bind_socket() - 571 - Uvicorn running on http://0.0.0.0:5500 (Press CTRL+C to quit) 
+INFO - 2023-10-10 16:24:29,909 - uvicorn.error - basereload.startup() - 77 - Started reloader process [509643] using WatchFiles 
+INFO - 2023-10-10 16:24:30,557 - uvicorn.error - server.serve() - 76 - Started server process [509645] 
+INFO - 2023-10-10 16:24:30,561 - uvicorn.error - on.startup() - 46 - Waiting for application startup. 
+INFO - 2023-10-10 16:24:30,562 - uvicorn.error - on.startup() - 60 - Application startup complete. 
+INFO - 2023-10-10 16:24:47,433 - uvicorn.error - server.shutdown() - 264 - Shutting down 
+INFO - 2023-10-10 16:24:47,536 - uvicorn.error - on.shutdown() - 65 - Waiting for application shutdown. 
+INFO - 2023-10-10 16:24:47,539 - uvicorn.error - on.shutdown() - 76 - Application shutdown complete. 
+INFO - 2023-10-10 16:24:47,542 - uvicorn.error - server.serve() - 86 - Finished server process [509645] 
+INFO - 2023-10-10 16:24:47,644 - uvicorn.error - basereload.shutdown() - 115 - Stopping reloader process [509643] 

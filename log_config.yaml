@@ -1,0 +1,95 @@
+version: 1
+disable_existing_loggers: False
+
+aliases:
+  - &dformat
+    "%(levelname)s - %(asctime)s - %(name)s - %(module)s.%(funcName)s() - %(lineno)d - %(message)s "
+
+
+formatters:
+#    json:
+#        "class": "main.CustomJsonFormatter"
+#        format: "%(asctime)s %(process)s %(levelname)s %(name)s %(module)s %(funcName)s %(lineno)s"
+#             "class": "main.CustomJsonFormatter",
+#             # "class": "pythonjsonlogger.jsonlogger.JsonFormatter",
+#             "format": "%(asctime)s %(process)s %(levelname)s %(name)s %(module)s %(funcName)s %(lineno)s"
+#         }
+    standard:
+        format: *dformat
+    console:
+        (): coloredlogs.ColoredFormatter
+        format: *dformat
+    error:
+        format: "%(levelname)s <PID %(process)d:%(processName)s> - filePath - %(name)s - msecs - %(msecs)d - %(filename)s - %(module)s.%(funcName)s() - lineNumber - %(lineno)d: %(message)s"
+
+    default:
+        (): coloredlogs.ColoredFormatter
+        format: *dformat
+
+    access:
+        (): uvicorn.logging.AccessFormatter
+        format: "%(levelname)s - %(asctime)s - %(client_addr)s - %(request_line)s - %(status_code)s"
+        datefmt: "%Y-%m-%d %H:%M:%S"
+
+handlers:
+    access:
+        class: logging.StreamHandler
+        formatter: access
+        stream: ext://sys.stdout
+
+    console:
+        class: logging.StreamHandler
+        level: NOTSET
+        formatter: console
+        stream: ext://sys.stdout
+
+    debug_file_handler:
+        class: logging.handlers.RotatingFileHandler
+        level: DEBUG
+        formatter: standard
+        filename: logs/debug.log
+        maxBytes: 10485760 # 10MB
+        backupCount: 20
+        encoding: utf8
+
+    critical_file_handler:
+        class: logging.handlers.RotatingFileHandler
+        level: CRITICAL
+        formatter: error
+        filename: logs/critical.log
+        maxBytes: 10485760 # 10MB
+        backupCount: 20
+        encoding: utf8
+
+    uvicorn_file_handler:
+        class: logging.handlers.RotatingFileHandler
+        level: NOTSET
+        formatter: standard
+        filename: logs/uvicorn.log
+        maxBytes: 10485760 # 10MB
+        backupCount: 20
+        encoding: utf8
+
+
+
+
+
+root:
+    level: INFO
+    handlers: [console, critical_file_handler, debug_file_handler]
+    propagate: no
+
+loggers:
+    uvicorn:
+        level: DEBUG
+        handlers: [uvicorn_file_handler]
+        propagate: YES
+    uvicorn.access:
+      handlers: [ access, uvicorn_file_handler]
+      level: INFO
+      propagate: False
+
+    uvicorn.error:
+      level: DEBUG
+      propagate: False
+      handlers: [console, uvicorn_file_handler]
